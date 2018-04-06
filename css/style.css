@@ -1,0 +1,226 @@
+body{
+    /*overflow: hidden;*/
+    overflow-x: hidden;
+}
+
+.custom-form{
+    float: right;
+}
+
+.custom-top-search{
+    border-bottom: 1px solid #ffc900
+}
+
+.custom-search-box{
+    text-align: right;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.custom-top-logo{
+    margin-top: 10px;
+    width: 141px;
+    height: 38px;
+    margin-bottom: 10px;
+}
+
+.dropdown-menu{
+    padding: 10px;
+}
+
+.form-check-input{
+    margin-top: 5px !important;
+    padding-left: 4px !important;
+}
+
+.form-inline label{
+    align-items: left !important;
+    -webkit-box-pack: inherit;
+    display: inline;
+}
+
+.custom-site-name-bar{
+    font-size: 1rem;
+}
+
+.custom-site-name-bar h1{
+    font-size: 20px;
+}
+
+.custom-nav-toggle{
+    color: #ffc900;
+}
+
+#header-image{
+    position:relative;
+    width:100%;
+    overflow:hidden;
+}
+
+.flex-column > .nav-item{
+    background-color: black;
+    color: white;
+    border: 1px solid white;
+    border-radius: 0;
+}
+
+.flex-column > .nav-item > a{
+    color: white;
+}
+
+.flex-column > .nav-item .active{
+    background-color: #ffc900;
+    color: black;
+    border-radius: 0;
+}
+
+.custom-nav-more-options{
+    display: none;
+}
+
+.container{
+    max-width: 1140px;
+}
+
+.custom-exhibit-nav-button{
+    background: black;
+    color: #ffc900;
+    text-align: center;
+    border: 1px solid #ffc900;
+    margin-bottom: 5px;
+    margin-top: 5px;
+}
+
+.custom-exhibit-nav-center{
+    text-align: center;
+}
+
+.custom-exhibit-nav, .custom-exhibit-title, .custom-top-search{
+    background-color: black;
+    color: white;
+}
+
+.custom-exhibit-subtitle{
+    background-color: black;
+    color: lightgray;
+}
+
+.custom-exhibit-nav{
+    padding-bottom: 3px;
+}
+.custom-nav-bar{
+    background-color: #333333;
+    color: #ffc900;
+}
+
+.custom-text{
+    background-color: #333333;
+    color: #ffc900; !important
+}
+
+.custom-site-name-bar{
+    color: white;
+    margin-top: 3px;
+}
+
+.custom-exhibit-title{
+    padding-top: 5px;
+}
+
+.custom-nav-toggler{
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(255,102,203, 0.7)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E");
+}
+
+.custom-toggler.navbar-toggler {
+    border-color: rgb(255,201,0);
+    /*
+    Keeping this here in case we want to return the fabulous
+    rgb(255,102,203);
+    */
+}
+.custom-toggler .navbar-toggler-icon {
+    /*background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(255,102,203, 0.7)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E");*/
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(255,201,0, 0.7)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E");
+}
+
+.custom-exhibit-mobile-foot{
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: 50px;
+    line-height: 37px;
+    background-color: black;
+    padding-bottom: 3px;
+}
+
+.custom-mobile-foot-print{
+    display: block;
+    height: 50px;
+}
+
+.custom-nest > li{
+    padding-left: 30px;
+}
+
+hr{
+    margin-top: 2px;
+    margin-bottom: 2px;
+    border-color: lightgrey;
+}
+
+.padding-0{
+    padding: 0;
+}
+
+#admin-bar{
+    color: white;
+    background-color: black;
+    /*border-bottom: 1px solid lightgray;*/
+}
+
+#admin-bar > ul > li > a{
+    font-family: Arial, Verdana, sans-serif !important;
+}
+
+#admin-bar > ul > li > a:hover{
+    color: #ffc900 !important;
+}
+
+.custom-exhibit-nav-button > a{
+    color: #ffc900 !important;
+}
+
+.custom-exhibit-nav-button > a:hover{
+    text-decoration: none !important;
+}
+
+#custom-exhibit-title-container > a{
+    color: white !important;
+}
+
+#custom-exhibit-title-container > a:hover{
+    text-decoration: none !important;
+}
+
+.custom-filler-boot{
+    flex-grow: 1; width: 100%; background-color: black;
+    max-height: 100%;
+}
+
+.custom-admin-container-top{
+    background-color: black;
+}
+
+html{
+    height: 100%;
+}
+
+body{
+    display: flex; flex-direction: column; height: 100%;
+}
+
+@media only screen and (max-width: 768px){
+    img{
+        width: 1vw;
+    }
+}
