@@ -1,8 +1,23 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Jonathan
- * Date: 4/4/2018
- * Time: 1:07 PM
- */
-echo "<h1>TAGS.PHP</h1>";
+$title = __('Browse Exhibits by Tag');
+echo head(array('title' => $title, 'bodyclass' => 'exhibits tags'));
+?>
+<h1><?php echo $title; ?></h1>
+
+<nav class="navigation exhibit-tags">
+    <?php echo nav(array(
+            array(
+                'label' => __('Browse All'),
+                'uri' => url('exhibits/browse')
+            ),
+            array(
+                'label' => __('Browse by Tag'),
+                'uri' => url('exhibits/tags')
+            )
+        )
+    ); ?>
+</nav>
+
+<?php echo tag_cloud($tags, 'exhibits/browse'); ?>
+
+<?php echo foot(); ?>
