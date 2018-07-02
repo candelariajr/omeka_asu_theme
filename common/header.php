@@ -30,9 +30,68 @@
     <?php //queue_js_file('bootstrap.bundle', 'javascripts'); ?>
     <?php echo head_js(); ?>
 </head>
-
 <?php echo body_tag(array('id' => @$bodyid, 'class' => @$bodyclass)); ?>
+
+<?php
+function runDbQuery($queryString){
+    $db = get_db();
+    $sql = $queryString;
+    $result = $db->fetchAll($sql);
+    return $result;
+}
+
+function getExhibitPageEditIdFromPageSlug($slug){
+    $db = get_db();
+    $results = runDbQuery("select id from $db->prefix"."exhibit_pages where slug = '$slug' limit 1");
+    return $results[0]['id'];
+}
+
+function getExhibitEditIdFromPageSlug($slug){
+    $db = get_db();
+    $results = runDbQuery("select id from $db->prefix"."exhibits where slug = '$slug' limit 1");
+    return $results[0]['id'];
+}
+
+function getSimplePage($slug){
+    $db = get_db();
+    $slug = substr($slug,1);
+    $queryString = "select id from $db->prefix"."simple_pages_pages where slug = '$slug'";
+    $results = runDbQuery($queryString);
+    if(!$results){
+        return false;
+    }else{
+        return $results[0]['id'];
+    }
+}
+
+$newURL = explode(CURRENT_BASE_URL, url());
+$isAdminPage = sizeof(explode($newURL[1], '/users/')) > 1;
+$isContactPage = sizeof(explode($newURL[1], "/contact/")) >1;
+
+if(current_user() != null && !$isAdminPage && !$isContactPage){
+
+    $adminURL = CURRENT_BASE_URL."/admin".$newURL[1];
+    $simplePage = getSimplePage($newURL[1]);
+    if($simplePage){
+        $adminURL = CURRENT_BASE_URL."/admin/simple-pages/index/edit/id/".$simplePage;
+    }
+    //echo explode(CURRENT_BASE_URL, url())[1];
+    if(sizeof(explode('/exhibits/show/', $newURL[1])) > 1){
+        $exhibitSlug = explode('/exhibits/show/', $newURL[1])[1];
+        //test to see if an individual exhibit page
+        if(sizeof(explode('/view-exhibit/', $exhibitSlug)) > 1){
+            $exhibitPageSlug = explode('/view-exhibit/', $exhibitSlug)[1];
+            $id = getExhibitPageEditIdFromPageSlug($exhibitPageSlug);
+            $adminURL = CURRENT_BASE_URL."/admin/exhibits/edit-page/".$id;
+        }else{
+            $id = getExhibitEditIdFromPageSlug($exhibitSlug);
+            $adminURL = CURRENT_BASE_URL."/admin/exhibits/edit/".$id;
+        }
+    }
+    echo "<div  style='background-color: #111; width: 100%'><div class='container'><span style='padding-left: 16px;'><a href='".$adminURL."' style='background-color:#fcc900; color: #111; border-radius: 5px; padding: 4px;'>Edit</a></span></div></div>";
+}?>
 <!--Generate Admin/Login Bar-->
+<!--Admin/Login Bar for mobile (takes up entire screen)-->
 <div class="custom-admin-container-top">
     <div class="container">
         <div class="row">
@@ -42,7 +101,7 @@
         </div>
     </div>
 </div>
-
+<!--Admin/Login Bar for desktop (is shared with other items)-->
 <div class="custom-top-search">
     <div class="container">
         <div class="row">
@@ -55,79 +114,28 @@
                 <?php fire_plugin_hook('public_body', array('view'=>$this)); ?>
             </div>
             <div class="col custom-search-box">
-                <form class="form-inline custom-form">
+                <form class="form-inline custom-form" id="search-form" name="search-form" action="<?php echo CURRENT_BASE_URL;?>/solr-search/results/interceptor" method="get">
                     <div class="input-group">
                         <label for="query" class="sr-only"></label>
                         <input type="text" name="query" placeholder="Search..." class="form-control" aria-label="Search terms" id="query" required>
                         <div class="input-group-append">
-                            <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            </button>
-                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                <div class="form-check form-row">
-                                    <input class="form-check-input col-1" type="radio" name="query_type" id="query_type-keyword" value="keyword" checked="checked">
-                                    <label class="form-check-label col-8"  for="query_type-keyword">
-                                        Keyword
-                                    </label>
-                                </div>
-                                <div class="form-check form-row">
-                                    <input class="form-check-input col-1" type="radio" name="query_type" id="query_type-boolean" value="boolean">
-                                    <label class="form-check-label col-8" for="query_type-boolean">
-                                        Boolean
-                                    </label>
-                                </div>
-                                <div class="form-check form-row">
-                                    <input class="form-check-input col-1" type="radio" name="query_type" id="query_type-exact_match" value="exact_match">
-                                    <label class="form-check-label col-8" for="query_type-exact_match">
-                                        Exact Match
-                                    </label>
-                                </div>
-                                <hr>
-                                <div>
-                                    <div class="form-check form-row">
-                                        <input class="form-check-input col-1" type="checkbox" name="record_types[]" id="record_types-Item" value="Item" checked="checked">
-                                        <label class="form-check-label col-8" for="record_types-Item">
-                                            Item
-                                        </label>
-                                    </div>
-                                    <div class="form-check form-row">
-                                        <input class="form-check-input col-1" type="checkbox" name="record_types[]" id="record_types-File" value="File" checked="checked">
-                                        <label class="form-check-label col-8" for="record_types-File">
-                                            File
-                                        </label>
-                                    </div>
-                                    <div class="form-check form-row">
-                                        <input class="form-check-input col-1" type="checkbox" name="record_types[]" id="record_types-Collection" value="Collection" checked="checked">
-                                        <label class="form-check-label col-8" for="record_types-Collection">
-                                            Collection
-                                        </label>
-                                    </div>
-                                    <div class="form-check form-row">
-                                        <input class="form-check-input col-1" type="checkbox" name="record_types[]" id="record_types-Exhibit" value="Exhibit" checked="checked">
-                                        <label class="form-check-label col-8" for="record_types-Exhibit">
-                                            Exhibit
-                                        </label>
-                                    </div>
-                                </div>
-                                <hr>
-                                <div class="form-check form-row">
-                                    <div class="form-check-label col-8">
-                                        <a href="/AdvancedSearch">Advanced Search</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="input-group-append">
-                            <button type="submit" class="btn">
+                            <button type="submit" name="submit-search" id="submit_search" value="Search" class="btn">
                                 Go
                             </button>
                         </div>
                     </div>
                 </form>
-                <script>
-                    jQuery("label, .dropdown-menu, fieldset").bind('click', function(e){
-                        e.stopPropagation();
-                    });
-                </script>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="title-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="title-header-text">
+                    <h5><a class="asu-header-link" href="http://library.appstate.edu">Appalachian State University Libraries</a></h5>
+                </div>
             </div>
         </div>
     </div>
@@ -137,7 +145,7 @@
         <div class="row">
             <div class="col-12">
                 <nav class="navbar navbar-expand-lg navbar-light">
-                    <a class="navbar-brand" href="#">
+                    <a class="navbar-brand" href="<?php echo url('') ?>">
                         <h4 class="custom-site-name-bar">Digital Collections</h4>
                     </a>
                     <button class="navbar-toggler custom-toggler" type="button" data-toggle="collapse" data-target="#navbarToggler0" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
@@ -150,23 +158,23 @@
                                 <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
                             </li>
                             -->
-                            <li class="nav-item">
-                                <a class="nav-link" style="color: #ffc900 !important" href="../../items/browse">Browse Items</a>
+                            <li class="nav-item" id="navItems">
+                                <a class="nav-link asu-link" href="<?php echo url("items")?>">Browse Items</a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link" style="color: #ffc900 !important" href="../../exhibits">Browse Exhibits</a>
+                            <li class="nav-item" id="navExhibits">
+                                <a class="nav-link asu-link" href="<?php echo url("exhibits")?>">Browse Exhibits</a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link" style="color: #ffc900 !important" href="../../collections">Browse Collections</a>
+                            <li class="nav-item" id="navCollections">
+                                <a class="nav-link asu-link" href="<?php echo url("collections")?>">Browse Collections</a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link" style="color: #ffc900 !important" href="../../about">About Us</a>
+                            <li class="nav-item" id="navAbout">
+                                <a class="nav-link asu-link" href="<?php echo url("about")?>">About Us</a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link" style="color: #ffc900 !important" href="../../contact">Contact Us</a>
+                            <li class="nav-item" id="navContact">
+                                <a class="nav-link asu-link" href="<?php echo url("contact")?>">Contact Us</a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link" style="color: #ffc900 !important" href="../../copyright">Copyright Info</a>
+                            <li class="nav-item" id="navCopyright">
+                                <a class="nav-link asu-link" href="<?php echo url("copyright")?>">Copyright Info</a>
                             </li>
                         </ul>
                     </div>
@@ -175,4 +183,15 @@
         </div>
     </div>
 </div>
+<?php //echo CURRENT_BASE_URL."<br>"
+    //.url()."<br>";
+$user = current_user();
+if($user != null){
+    $newURL = explode(CURRENT_BASE_URL, url());
+    $adminURL = CURRENT_BASE_URL."/admin/".$newURL[1];
+    //echo "<span style='color: #ffc900'><a href='".$adminURL."'>Admin This</a></span>";
+}?>
+<?php echo body_tag(array('id' => @$bodyid, 'class' => @$bodyclass)); ?>
+<?php //fire_plugin_hook('public_body', array('view'=>$this)); ?>
+<?php //fire_plugin_hook('public_header', array('view'=>$this)); ?>
 <?php fire_plugin_hook('public_content_top', array('view'=>$this)); ?>
