@@ -3,7 +3,7 @@ COLLECTIONS\SHOW.PHP
 $collectionTitle = strip_formatting(metadata('collection', array('Dublin Core', 'Title')));
 ?>
 <?php echo head(array('title'=> $collectionTitle, 'bodyclass' => 'collections show')); ?>
-<?php echo $colectionTitle; ?>
+<?php echo $collectionTitle; ?>
 <?php echo strip_formatting(metadata('collection', array('Dublin Core', 'Description'))); ?>
 <?php echo link_to_items_browse(__('Select items from the %s Collection', $collectionTitle), array('collection' => metadata('collection', 'id'))); ?>
 <?php if (metadata('collection', 'total_items') > 0): ?>
