@@ -11,6 +11,10 @@ body{
     /*background-color: #c1c1c1;*/
 }
 
+.description img{
+    width: 90%;
+}
+
 @media (max-width: 576px){
     body{
         padding-bottom: 18rem;
@@ -450,9 +454,31 @@ h3{
     background-color: #ffc900;
     color: #111;
 }
+
+
+.element-set{
+    background-color: #ccc;
+    border-radius: 9px;
+    padding:10px;
+    margin-bottom:20px;
+    word-wrap:break-word;
+}
+
+.download-file>#foobar{
+    max-width: 32px;
+    max-height: 32px;
+}
+
+#foobar.full{
+    max-width: 100%;
+    max-height: 100%;
+    padding-bottom: 30px;
+}
+
 .quick{
     padding: 10px;
 }
+
 #asu-footer-logo{
     width: 124px;
     float: right;
@@ -484,23 +510,40 @@ h3{
     color: #ffc900;
 }
 
+.card{
+    border-width: 3px;
+    border-radius: 6px;
+}
+
 .card-img-top{
     text-align: center;
     padding-top: 15px;
 }
 
 .card-title{
-    margin: 0.75rem;
+    margin: 0 8px 0 8px;
+    font-size: 1.25rem;
 }
 
 .card-title>a{
-    font-size: 30px;
+    font-size: 15px;
     color: black;
 }
 
 .header-subtext{
     background-color: #111111;
     color: white;
+}
+
+.btn-asu{
+    background-color: #ffc900;
+    border-color: #d1ac00;
+    color: black;
+}
+
+.btn-asu:hover{
+    color: black;
+    background-color: #d1ac00;
 }
 
 .header-subtext-text-padding{
@@ -513,8 +556,20 @@ h3{
     padding-left: 15px;
 }
 
+.navigation{
+    background-color: #111;
+    margin-bottom: 0;
+    padding-bottom: 1rem;
+    border-radius: 6px;
+}
+
 .navigation>li>a{
     padding-top: 15px;
+    color: #ffc900;
+}
+
+.navigation>li>a:hover{
+    color: white;
 }
 
 .pagination_next{
@@ -525,6 +580,10 @@ h3{
 .pagination_previous{
     margin-right: 10px;
     padding-top: 4px;
+}
+
+.pagination>.page-input>form>input{
+    max-width: 30px;
 }
 
 .footer-controls{
