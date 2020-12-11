@@ -34,14 +34,10 @@ echo head(array('title'=>$pageTitle, 'bodyclass'=>'items tags'));
         if(!$tags){
             $sql = "
             SELECT 
-	          -- records_tags.id, 
-              -- records_tags.record_id, 
-              -- records_tags.tag_id, 
-              -- records_tags.record_type, 
               tags.name as t_name,
               count(*) as t_count 
             FROM 
-	          $dbName"."records_tags as records_tags 
+	      $dbName"."records_tags as records_tags 
               inner join $dbName"."tags as tags on tags.id = records_tags.tag_id
             WHERE
 	          records_tags.record_type = 'Item'
@@ -54,11 +50,8 @@ echo head(array('title'=>$pageTitle, 'bodyclass'=>'items tags'));
         $result = $db->fetchAll($sql);
         echo "<table id='tagTable' class='table table-striped table-bordered' style='display: none;'>";
         echo "<thead><tr><th>Tag Name</th><th>Tag Count</th></tr></thead><tbody>";
-        $counter = 0;
         foreach ($result as $itemRecord){
-            //echo "<tr id='record$counter'><td id='name$counter'>".$itemRecord['t_name']."</td><td id='count$counter'>".$itemRecord['t_count']."</td></tr>";
             echo "<tr><td><a href='".CURRENT_BASE_URL."/items/browse?tags=".$itemRecord['t_name']."'>".$itemRecord['t_name']."</a></td><td>".$itemRecord['t_count']."</td></tr>";
-            $counter++;
         }
         echo "</tbody></table>"
         ?></div>
