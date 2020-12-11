@@ -1,3 +1,168 @@
+<?php
+// THIS BLOCK - GET THE PREVIOUS AND NEXT ITEMS IN THE COLLECTION
+/*
+$db = get_db();
+$id =  metadata('item', 'id');
+$sql = " SELECT count(*) as 'count' FROM  $db->prefix"."items where id = $id";
+$result = $db->fetchAll($sql);
+$result[1] = array("id" => $id);
+echo json_encode($result);
+*/
+//$sql = "select id from $db->prefix"."items where collection_id = (select collection_id from $db->prefix"."items where id = $id) and public = 1 order by id asc";
+//$sql = "SET @a = (select collection_id from omeka_items where id = 37385);
+//select id as id, @a as collection_id from omeka_items where collection_id = @a and public = 1 order by id asc;";
+//$sql = "select count(*) from $db->prefix"."items where collection_id <= (select collection_id from $db->prefix"."items where id = $id) ";
+
+/*
+
+$db = get_db();
+//get item id
+$id = metadata('item', 'id');
+$sql = "select collection_id from $db->prefix"."items where id = $id";
+//get collection id of item
+$result = $db->fetchAll($sql);
+$noCollection = true;
+$collectionId = -1;
+$numItems = 0;
+//returns empty set instead of no results
+if(sizeof($result) != 0 && ($result[0]['collection_id'] != '')) {
+    $noCollection = false;
+    $collectionId = $result[0]['collection_id'];
+}
+$currentPos = 0;
+//if there is at least one item in the collection
+if($noCollection == false){
+    //set the current position of the current id to the position of the item in the collection
+    $sql = "select id from $db->prefix"."items where collection_id = $collectionId  and public = 1 order by id asc";
+    $result = $db->fetchAll($sql);
+    $numItems = sizeof($result);
+    for($i = 0; $i <= $numItems - 1; $i++){
+        if($result[$i]['id'] == $id){
+            $currentPos = $i + 1;
+        }
+    }
+}
+$previousUrl = "";
+$nextUrl = "";
+$previousUrlHTML = "ORIGINAL HTML";
+$nextUrlHTML = "ORIGINAL HTML";
+//TODO: Clean this up with some functions and logic so a single function call per one button can render it accordingly
+if($noCollection == false && $numItems != 0){
+    //This shouldn't even be called with zero items in the collection
+    if($numItems == 1){
+        //only one item in the collection
+    }else if($currentPos == 1 && $numItems > 1){
+        //at the beginning of a collection
+        //$previousUrl = $result[$numItems - 1]['id'];
+        $nextUrl = $result[$currentPos]['id'];
+        $previousUrlHTML = "AT BEGINNING OF COLLECTION";
+        $nextUrlHTML = "<br><a href=\"$nextUrl\" class='next'>NEXT</a>";
+    }else if($currentPos == $numItems && $numItems > 1){
+        //at the end of a collection
+        $previousUrl = $result[$currentPos - 2]['id'];
+        //$nextUrl = $result[0]['id'];
+        $nextUrlHTML = "AT END OF COLLECTION";
+        $previousUrlHTML = "<br><a href=\"$previousUrl\" class='next'>PREVIOUS</a>";
+    }else{
+        //in the middle of a collection\
+        $previousUrl = $result[$currentPos - 2]['id'];
+        $nextUrl = $result[$currentPos]['id'];
+        $previousUrlHTML = "<br><a href=\"$previousUrl\" class='previous'>PREVIOUS</a>";
+        $nextUrlHTML = "<br><a href=\"$nextUrl\" class='next'>NEXT</a>";
+        // <a href="<?php echo $previousUrl\?\>">
+    }
+}
+
+
+function getNextButton(){
+    $nextUrlHTML = Zend_Registry::get('App_State_Custom_Next_Url_HTML');;
+    echo $nextUrlHTML;
+}
+
+getPreviousButton();
+getNextButton();
+
+Zend_Registry::set('App_State_Custom_Previous_Url_HTML', $previousUrlHTML);
+Zend_Registry::set('App_State_Custom_Next_Url_HTML', $nextUrlHTML);
+
+
+
+
+function getPreviousButton(){
+    $previousUrlHTML = Zend_Registry::get('App_State_Custom_Feature_Factory');
+    echo parseAdaptiveUrl($previousUrlHTML);
+}
+*/
+/*
+ * ===================================================================================================================
+ *                                           BEGIN PREVIOUS <-> NEXT BUTTON PHP
+ * ===================================================================================================================
+ * */
+//TODO: Wrap this up in an object. It's not safe having this code out here in the wild naked
+$db = get_db();
+//get current item id
+$currentItem = metadata('item', 'id');
+//determine if item is in a collection
+$sql = "select collection_id from $db->prefix"."items where id = $currentItem";
+$result = $db->fetchAll($sql);
+$itemInCollection = false;
+$previousItem = -1;
+$nextItem = -1;
+$singleItem = 0;
+$index = 0;
+$collectionArray = array();
+if($result[0]['collection_id'] != ''){
+    $itemInCollection = true;
+    $collectionId = $result[0]['collection_id'];
+    $sql = "select id from $db->prefix"."items where collection_id = $collectionId  and public = 1 order by id asc";
+    //get list of ids in numerical order of items in this collection
+    $collectionArray = $db->fetchAll($sql);
+    //get the index of the current item within the collection
+    if(sizeof($collectionArray) > 1){
+        while($currentItem != $collectionArray[$index]['id']){
+            $index++;
+        }
+        echo "Index in Collection: ".$index;
+    }else{
+        $index = 0;
+        $singleItem = 1;
+    }
+}
+
+if($itemInCollection && $index != sizeof($collectionArray) - 1){
+    $nextItem = $collectionArray[$index + 1]['id'];
+}
+if($itemInCollection && $index > 0){
+    $previousItem = $collectionArray[$index - 1]['id'];
+}
+
+function getPrevious($previousItem){
+    if($previousItem == -1){
+        echo "At Beginning of Collection";
+    }else{
+        echo "<a href='$previousItem'>Previous Item</a>";
+    }
+}
+
+function getNext($nextItem){
+    if($nextItem == -1){
+        echo "At End of Collection";
+    }else{
+        echo "<a href='$nextItem'>Next Item</a>";
+    }
+}
+
+/*
+ * ===================================================================================================================
+ *                                            END PREVIOUS <-> NEXT BUTTON PHP
+ * ===================================================================================================================
+ * */
+
+
+
+
+?>
+<!-- END LOGIC FOR GETTING POSITION IN COLLECTION INFO -->
 <?php echo head(array('title' => metadata('item', array('Dublin Core', 'Title')), 'bodyid'=>'items','bodyclass' => 'show')); ?>
     <div class="item-title">
         <div class="container">
@@ -22,15 +187,18 @@
             </div>
         </div>
     </div>
+
     <div class="container">
         <div class="row">
+            <!-- MAIN DISPLAY -->
             <div class="col-lg-8">
+                <!-- CONTENT -->
                 <?php //echo get_specific_plugin_hook_output('DocsViewer', 'public_items_show', array('view' => $this, 'item' => $item)); ?>
                 <?php
                 $sketchFab = false;
                 $fileExtension = null;
                 $itemType = metadata('item', 'item_type_name');
-                // echo $itemType; Removed per request
+                //echo $itemType;
                 if($itemType == 'Sketchfab'){
                     $sketchFab = true;
                     ?>
@@ -42,11 +210,11 @@
                 }
                 if(strtoupper($fileExtension) == 'PDF'){
                     echo get_specific_plugin_hook_output('UniversalViewer', 'public_items_show', array('view' => $this, 'item' => $item));
-                    echo "<br>";
+                    //echo "<br>";
                 }
                 else{
                     echo get_specific_plugin_hook_output('DocsViewer', 'public_items_show', array('view' => $this, 'item' => $item));
-                    echo "<br>";
+                    //echo "<br>";
                 }
 
                 // echo get_specific_plugin_hook_output('UniversalViewer', 'public_items_show', array('view' => $this, 'item' => $item));
@@ -68,11 +236,10 @@
                             'icons' => array(
                                 'audio/mpeg'=>img('3a.png'),
                                 'application/pdf'=>img('pdficon_large.png'))));
-                    echo "<br>";
-                }
-
-                ?>
+                    // echo "<br>";
+                }?>
                 <div class="row">
+                    <!-- CITATION -->
                     <div class="col">
                         <?php if (metadata($item, 'has tags')): ?>
                             <div id="item-tags" class="element">
@@ -80,7 +247,6 @@
                                 <div class="element-text tags"><?php echo tag_string('item'); ?></div>
                             </div>
                         <?php endif; ?>
-
                         <!-- If the item belongs to a collection, the following creates a link to that collection. -->
                         <?php if (get_collection_for_item()): ?>
                             <div id="collection" class="element">
@@ -107,12 +273,13 @@
                                     jQuery("input[name='item']").val(citationText); });
                                 </script>
                                 <br>
-                            <?php endif; ?></div>
+                            <?php endif; ?>
+                        </div>
                     </div>
                 </div>
                 <?php if(plugin_is_active('SocialBookmarking')): ?>
                     <div class="row">
-                        <div class="col-lg-4">
+                        <div class="col">
                             <?php echo get_specific_plugin_hook_output('SocialBookmarking', 'public_items_show', array('view' => $this, 'item' => $item)); ?>
                         </div>
                     </div>
@@ -121,6 +288,7 @@
             </div>
             <div class="col-lg-4">
                 <div class="row">
+                    <!-- METADATA -->
                     <div class="col-12">
                         <?php echo all_element_texts($item,
                             array(
@@ -138,14 +306,20 @@
     <div class="container">
         <div class="row">
             <div class="col">
-                <ul class="item-pagination navigation">
-                    <li id="previous-item" class="previous">
-                        <?php echo link_to_previous_item_show(); ?>
-                    </li>
-                    <li id="next-item" class="next">
-                        <?php echo link_to_next_item_show(); ?>
-                    </li>
-                </ul>
+                <?php if($itemInCollection):?>
+                    <ul class="item-pagination navigation">
+                        <li id="previous-item" class="previous">
+                            <?php //echo link_to_previous_item_show();
+                                getPrevious($previousItem);
+                            ?>
+                        </li>
+                        <li id="next-item" class="next">
+                            <?php //echo link_to_next_item_show();
+                                getNext($nextItem);
+                            ?>
+                        </li>
+                    </ul>
+                <?php endif;?>
             </div>
         </div>
     </div>
@@ -246,4 +420,21 @@
             });
         });
     </script>
+    <?php if($itemInCollection): ?>
+        <script>
+            window.addEventListener("keydown", function(e){
+                if(e.key === "ArrowLeft"){
+                    <?php if($previousItem !== -1): ?>
+                        window.location.href = "<?php echo $previousItem?>";
+                    <?php endif; ?>
+                }
+                if(e.key === "ArrowRight"){
+                    <?php if($nextItem !== -1): ?>
+                        window.location.href = "<?php echo $nextItem?>";
+                    <?php endif; ?>
+                }
+            }, true);
+        </script>
+    <?php endif; ?>
+</script>
 <?php echo foot();
