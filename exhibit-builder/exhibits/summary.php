@@ -1,33 +1,25 @@
 <?php echo head(array('title' => metadata('exhibit', 'title'), 'bodyclass'=>'exhibits summary')); ?>
-
-<h1><?php echo metadata('exhibit', 'title'); ?></h1>
-<br/>
-<?php echo exhibit_builder_page_nav(); ?>
-
-<div id="primary">
-<?php if ($exhibitDescription = metadata('exhibit', 'description', array('no_escape' => true))): ?>
-<div class="exhibit-description">
-    <?php echo $exhibitDescription; ?>
+<div class="<?php echo get_theme_option('Exhibit Color');?> container">
+<div class="row">
+    <div class="col-md-3" id="left-side-exhibit-bar">
+        <?php set_exhibit_pages_for_loop_by_exhibit(); ?>
+        <?php if (has_loop_records('exhibit_page')): ?>
+            <nav id="exhibit-pages">
+                <ul class="list-group list-group-root well">
+                    <?php foreach (loop('exhibit_page') as $exhibitPage): ?>
+                        <?php echo custom_exhibit_builder_page_summary($exhibitPage); ?>
+                    <?php endforeach; ?>
+                </ul>
+            </nav>
+        <?php endif; ?>
+    </div>
+    <div class="col-md-9">
+        Content
+    <?php
+    $theme = get_theme_option('Exhibit Color');
+    echo $theme;
+    ?>
+    </div>
 </div>
-<?php endif; ?>
-
-<?php if (($exhibitCredits = metadata('exhibit', 'credits'))): ?>
-<div class="exhibit-credits">
-    <h3><?php echo __('Credits'); ?></h3>
-    <p><?php echo $exhibitCredits; ?></p>
 </div>
-<?php endif; ?>
-</div>
-
-<?php set_exhibit_pages_for_loop_by_exhibit(); ?>
-<?php if (has_loop_records('exhibit_page')): ?>
-<nav id="exhibit-pages">
-    <ul>
-        <?php foreach (loop('exhibit_page') as $exhibitPage): ?>
-        <?php echo exhibit_builder_page_summary($exhibitPage); ?>
-        <?php endforeach; ?>
-    </ul>
-</nav>
-<?php endif; ?>
-
 <?php echo foot(); ?>
