@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html class="<?php echo get_theme_option('Style Sheet'); ?>" lang="<?php echo get_html_lang(); ?>">
+<html class="<?php echo get_theme_option('Exhibit Color'); ?>" lang="<?php echo get_html_lang(); ?>">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=yes" />
@@ -31,7 +31,6 @@
     <?php echo head_js(); ?>
 </head>
 <?php echo body_tag(array('id' => @$bodyid, 'class' => @$bodyclass)); ?>
-
 <?php
 function runDbQuery($queryString){
     $db = get_db();
@@ -48,7 +47,8 @@ function getExhibitPageEditIdFromPageSlug($slug){
 
 function getExhibitEditIdFromPageSlug($slug){
     $db = get_db();
-    $results = runDbQuery("select id from $db->prefix"."exhibits where slug = '$slug' limit 1");
+    $sql = "select id from $db->prefix"."exhibits where slug = '$slug' limit 1";
+    $results = runDbQuery($sql);
     return $results[0]['id'];
 }
 
@@ -63,33 +63,41 @@ function getSimplePage($slug){
         return $results[0]['id'];
     }
 }
-
-$newURL = explode(CURRENT_BASE_URL, url());
+if(CURRENT_BASE_URL == ""){
+    $newURL[1] = url();
+}else{
+    $newURL = explode(CURRENT_BASE_URL, url());
+}
 $isAdminPage = sizeof(explode($newURL[1], '/users/')) > 1;
 $isContactPage = sizeof(explode($newURL[1], "/contact/")) >1;
-
+//user is authenticated
 if(current_user() != null && !$isAdminPage && !$isContactPage){
-
     $adminURL = CURRENT_BASE_URL."/admin".$newURL[1];
     $simplePage = getSimplePage($newURL[1]);
     if($simplePage){
         $adminURL = CURRENT_BASE_URL."/admin/simple-pages/index/edit/id/".$simplePage;
     }
-    //echo explode(CURRENT_BASE_URL, url())[1];
+    //check to see if exhibit
     if(sizeof(explode('/exhibits/show/', $newURL[1])) > 1){
+
         $exhibitSlug = explode('/exhibits/show/', $newURL[1])[1];
         //test to see if an individual exhibit page
-        if(sizeof(explode('/view-exhibit/', $exhibitSlug)) > 1){
-            $exhibitPageSlug = explode('/view-exhibit/', $exhibitSlug)[1];
+        if(sizeof(explode('/', $exhibitSlug)) > 1){
+            //Exhibit Page
+            $exhibitPageSlug = explode('/', $exhibitSlug)[1];
             $id = getExhibitPageEditIdFromPageSlug($exhibitPageSlug);
             $adminURL = CURRENT_BASE_URL."/admin/exhibits/edit-page/".$id;
         }else{
+            //Exhibit
+            $exhibitSlug = explode('/', $exhibitSlug)[0];
             $id = getExhibitEditIdFromPageSlug($exhibitSlug);
             $adminURL = CURRENT_BASE_URL."/admin/exhibits/edit/".$id;
         }
     }
     echo "<div  style='background-color: #111; width: 100%'><div class='container'><span style='padding-left: 16px;'><a href='".$adminURL."' style='background-color:#fcc900; color: #111; border-radius: 5px; padding: 4px;'>Edit</a></span></div></div>";
-}?>
+}
+?>
+
 <!--Generate Admin/Login Bar-->
 <!--Admin/Login Bar for mobile (takes up entire screen)-->
 <div class="custom-admin-container-top">
@@ -107,7 +115,7 @@ if(current_user() != null && !$isAdminPage && !$isContactPage){
         <div class="row">
             <div class="col d-none d-sm-none d-md-none d-lg-block col-lg-2 d-xl-block col-xl-2">
                 <a href="http://appstate.edu" title="ASU">
-                    <img src="http://localhost/omeka_themes/files/custom/small_logo.png" alt="ASU" class="custom-top-logo">
+                    <img src="https://library.appstate.edu/profiles/asu/themes/custom/asu_theme/images/appstatelogo.png" alt="ASU" class="custom-top-logo">
                 </a>
             </div>
             <div class=" custom-admin-container-mid col d-none d-sm-none d-md-block d-lg-block d-xl-block">
@@ -158,9 +166,11 @@ if(current_user() != null && !$isAdminPage && !$isContactPage){
                                 <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
                             </li>
                             -->
+                            <!--
                             <li class="nav-item" id="navItems">
                                 <a class="nav-link asu-link" href="<?php echo url("items")?>">Browse Items</a>
                             </li>
+                            -->
                             <li class="nav-item" id="navExhibits">
                                 <a class="nav-link asu-link" href="<?php echo url("exhibits")?>">Browse Exhibits</a>
                             </li>
@@ -183,14 +193,6 @@ if(current_user() != null && !$isAdminPage && !$isContactPage){
         </div>
     </div>
 </div>
-<?php //echo CURRENT_BASE_URL."<br>"
-    //.url()."<br>";
-$user = current_user();
-if($user != null){
-    $newURL = explode(CURRENT_BASE_URL, url());
-    $adminURL = CURRENT_BASE_URL."/admin/".$newURL[1];
-    //echo "<span style='color: #ffc900'><a href='".$adminURL."'>Admin This</a></span>";
-}?>
 <?php echo body_tag(array('id' => @$bodyid, 'class' => @$bodyclass)); ?>
 <?php //fire_plugin_hook('public_body', array('view'=>$this)); ?>
 <?php //fire_plugin_hook('public_header', array('view'=>$this)); ?>
