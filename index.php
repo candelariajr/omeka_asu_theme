@@ -8,7 +8,7 @@
 //get the display setting for the exhibits and collections
 $displayFeaturedCollection = get_theme_option('Display Featured Collection');
 $displayFeaturedExhibit = get_theme_option('Display Featured Exhibit');
-$displayFeaturedItem = (get_theme_option('Display Featured Item') !== '0');
+$displayFeaturedItem = get_theme_option('Display Featured Item');
 //create a place to store the retrieved views
 $randomCollectionView = "";
 $randomExhibitView = "";
@@ -26,80 +26,7 @@ if($displayFeaturedItem){
 ?>
 <div class="container">
     <div class="row">
-        <div class="col d-xs-block d-lg-none left-index-panel">
-            <!-- Featured Item -->
-            <?php if ($displayFeaturedItem): ?>
-                <div id="featured-item" class="featured">
-                    <h3><?php echo __('Featured Item'); ?></h3>
-                    <?php echo $randomItemView; ?>
-                </div><!-- end featured item -->
-            <?php endif; ?>
-
-            <!-- Featured Collection -->
-            <?php if ($displayFeaturedCollection): ?>
-                <div id="featured-collection" class="featured">
-                    <h3><?php echo __('Featured Collection'); ?></h3>
-                    <?php echo $randomCollectionView; ?>
-                </div><!-- end featured collection -->
-            <?php endif; ?>
-
-            <!-- Featured Exhibit -->
-            <?php if ($displayFeaturedExhibit && function_exists('exhibit_builder_display_random_featured_exhibit')): ?>
-                <?php echo $randomExhibitView ?>
-            <?php endif;?>
-        </div>
-    </div>
-    <div class="row">
-        <div class="d-none d-lg-block col-lg-4 left-index-panel">
-            <!-- Right Side Top in Desktop: None In Mobile-->
-
-            <!-- featured item-->
-            <?php if ($displayFeaturedItem): ?>
-                <div id="featured-item" class="featured">
-                    <h3><?php echo __('Featured Item'); ?></h3>
-                    <?php echo $randomItemView; ?>
-                </div><!-- end featured item -->
-            <?php endif; ?>
-
-            <!-- Featured Collection -->
-            <?php if ($displayFeaturedCollection): ?>
-                <div id="featured-collection" class="featured">
-                    <h3><?php echo __('Featured Collection'); ?></h3>
-                    <?php echo $randomCollectionView; ?>
-                </div><!-- end featured collection -->
-            <?php endif; ?>
-
-            <!-- Featured Exhibit -->
-            <?php if ($displayFeaturedExhibit && function_exists('exhibit_builder_display_random_featured_exhibit')): ?>
-                <?php echo $randomExhibitView ?>
-            <?php endif;?>
-
-            <div class="quick">
-                <h3>Contact Information</h3>
-                <p>For questions about the ASU <br />Digital Collections, please contact Pam Mitchem.
-                    <br>
-                        pricemtchemp@appstate.edu
-                    <br>
-                    <a
-                        target="_blank"
-                        href="https://mail.google.com/mail/?view=cm&fs=1&to=someone@example.com&su=SUBJECT&body=BODY&bcc=someone.else@example.com"
-                        data-toggle="tooltip"
-                        data-placement="right"
-                        title="Use Gmail to compose message">
-                        (Web Version)</a>
-                    <br>
-                    <a
-                        href="mailto:pricemtchemp@appstate.edu"
-                        data-toggle="tooltip"
-                        data-placement="right"
-                        title="Use your Desktop Client (Thunderbird, Outlook) to compose message">
-                        (Desktop Version)</a>
-                </p>
-                <p>Phone: 828.262.7422</p>
-            </div>
-
-        </div>
-        <div class="col-s-12 col-lg-8 right-index-panel">
+        <div class="col-s-12 col-lg-12 right-index-panel">
             <!-- Right Side in Desktop: Full Middle in Mobile-->
             <?php if ($homepageText = get_theme_option('Homepage Text')): ?>
                 <!-- Homepage Text -->
@@ -122,18 +49,19 @@ if($displayFeaturedItem){
                         <h2><?php echo __('Recently Added Items'); ?></h2>
                         <?php
                         set_loop_records('items', get_recent_items(5));
-                        foreach (loop('items') as $item):
-                            ?>
+                        foreach (loop('items') as $item): ?>
                             <div class="item">
-                                <h4><?php echo link_to_item(); ?></h4>
-                                <?php if (metadata($item, 'has thumbnail')): ?>
+                                <?php //if (metadata($item, 'has thumbnail')): ?>
                                     <div class="item-img">
                                         <?php echo link_to_item(item_image('square_thumbnail')); ?>
                                     </div>
-                                <?php endif; ?>
-                                <?php if ($desc = metadata($item, array('Dublin Core', 'Description'), array('snippet'=>150))): ?>
-                                    <div class="item-description"><?php echo $desc; ?><p><?php echo link_to_item('see more',(array('class'=>'show'))) ?></p></div>
-                                <?php endif; ?>
+                                <?php //endif; ?>
+                                <div class="item-info">
+                                    <h4><?php echo link_to_item(); ?></h4>
+                                    <?php if ($desc = metadata($item, array('Dublin Core', 'Description'), array('snippet'=>150))): ?>
+                                        <div class="item-description"><?php echo $desc; ?><p><?php echo link_to_item('see more',(array('class'=>'show'))) ?></p></div>
+                                    <?php endif; ?>
+                                </div>
                             </div>
                         <?php endforeach; ?>
 
@@ -144,12 +72,39 @@ if($displayFeaturedItem){
                 <?php endif; ?>
 
                 <?php fire_plugin_hook('public_home', array('view' => $this)); ?>
-
             </div>
         </div>
     </div>
     <div class="row">
+
         <!-- Left Side Bottom in Desktop: Full Bottom in Mobile-->
+        <div class="d-none d-lg-block col-lg-4 left">
+            <hr>
+            <div class="quick">
+                <h3>Contact Information</h3>
+                <p>For questions about the ASU <br />Digital Collections, please contact Pam Mitchem.
+                    <br>
+                    pricemtchemp@appstate.edu
+                    <br>
+                    <!--href="https://mail.google.com/mail/?view=cm&fs=1&to=someone@example.com&su=SUBJECT&body=BODY&bcc=someone.else@example.com"-->
+                    <a
+                            target="_blank"
+                            href="https://mail.google.com/mail/?view=cm&fs=1&to=pricemtchemp@appstate.edu&su=Contact Regarding Omeka"
+                            data-toggle="tooltip"
+                            data-placement="right"
+                            title="Use Gmail to compose message">
+                        (Web Version)</a>
+                    <br>
+                    <a
+                            href="mailto:pricemtchemp@appstate.edu"
+                            data-toggle="tooltip"
+                            data-placement="right"
+                            title="Use your Desktop Client (Thunderbird, Outlook) to compose message">
+                        (Desktop Version)</a>
+                </p>
+                <p>Phone: 828.262.7422</p>
+            </div>
+        </div>
         <div class="col d-xs-block d-lg-none left-index-panel">
             <div class="quick">
                 <h3>Contact Information</h3>
