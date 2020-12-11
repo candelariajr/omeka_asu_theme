@@ -12,7 +12,7 @@ $navArray[] = array('label'=>'Contribute', 'uri'=>url('contribution'));
     <div class="container">
         <div class="row">
             <div class="col-xs-12 col-sm-6 col-md-3">
-                © 2018 Appalachian State University Boone, NC 28608 | 828-262-2000
+                © 2020 Appalachian State University Boone, NC 28608 | 828-262-2000
                 Proudly powered by <a class="asu-link" href="http://omeka.org">Omeka</a>
             </div>
             <div class="col-xs-12 col-sm-6 col-md-3">
@@ -30,11 +30,14 @@ $navArray[] = array('label'=>'Contribute', 'uri'=>url('contribution'));
             <div class="col-xs-12 col-sm-6 col-md-3 pull-right" id="footer-university">
                 <a href="http://appstate.edu" title="Appalacian State University">
                     <img src="https://library.appstate.edu/profiles/asu/themes/custom/asu_theme/images/appstatelogo.png"
-                         id="asu-footer-logo" class="pull-right" alt="Appalachian State University"
+                         id="asu-footer-logo" class="pull-right" alt="Appalachian State University">
                 </a>
             </div>
         </div>
         <div class="row">
+            <div class="col">
+                <div style="font-size: 10px; color: grey;cursor: auto;">Architecture and UI adapted to AppState Theme by Jonathan Candelaria</div>
+            </div>
         </div>
     </div>
 </div>
