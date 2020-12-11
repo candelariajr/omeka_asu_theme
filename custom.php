@@ -23,12 +23,8 @@ function find_random_item($params = array())
     return $item;
 }
 
-?>
-
-<?php
 function display_random_featured_collection_with_item()
 {
-
     $featuredCollection = random_featured_collection();
     $html = '<h2>Featured Collection</h2>';
     if ($featuredCollection) {
@@ -47,4 +43,47 @@ function display_random_featured_collection_with_item()
     }
     return $html;
 }
-?>
+
+/**
+* Return the HTML for summarizing a random featured exhibit
+* CUSTOMIZED FOR BS TEMPLATE BY JONATHAN CANDELARIA 6-14-18
+* This is to make the featured exhibit html match the html for featured
+* item and collection panels
+* @return string
+*/
+function asu_exhibit_builder_display_random_featured_exhibit()
+{
+$html = '<div id="featured-exhibit" class="featured">';
+    $featuredExhibit = exhibit_builder_random_featured_exhibit();
+    $html .= '<h3>' . __('Featured Exhibit') . '</h3>';
+    if ($featuredExhibit) {
+    $html .= get_view()->partial('exhibits/single.php', array('exhibit' => $featuredExhibit));
+    } else {
+    $html .= '<p>' . __('You have no featured exhibits.') . '</p>';
+    }
+    $html .= '</div>';
+$html = apply_filters('exhibit_builder_display_random_featured_exhibit', $html);
+return $html;
+}
+
+function custom_exhibit_builder_page_summary($exhibitPage = null)
+{
+    if (!$exhibitPage) {
+        $exhibitPage = get_current_record('exhibit_page');
+    }
+    $id = $exhibitPage->id;
+    $children = $exhibitPage->getChildPages();
+    $html = '<a class="list-group-item" href="' . exhibit_builder_exhibit_uri(get_current_record('exhibit'), $exhibitPage) . '">'
+        . metadata($exhibitPage, 'menu_title') .'</a>';
+
+    if ($children) {
+        $html .= '<div class="list-group">';
+        foreach ($children as $child) {
+            $html .= custom_exhibit_builder_page_summary($child);
+            release_object($child);
+        }
+        $html .= '</div>';
+    }
+    //$html .= '</li>';
+    return $html;
+}
