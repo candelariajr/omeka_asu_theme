@@ -8,7 +8,6 @@ echo head(array(
   <nav id="exhibit-pages">
     <?php echo exhibit_builder_page_nav(); ?>
   </nav>
-
  <h1><span class="exhibit-page"><?php echo metadata('exhibit_page', 'title'); ?></span></h1>
  <br/>
  <?php if (count(exhibit_builder_child_pages()) > 0): ?>
