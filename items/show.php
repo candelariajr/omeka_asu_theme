@@ -119,10 +119,11 @@ if($result[0]['collection_id'] != ''){
     $collectionArray = $db->fetchAll($sql);
     //get the index of the current item within the collection
     if(sizeof($collectionArray) > 1){
-        while($currentItem != $collectionArray[$index]['id']){
-            $index++;
+        for($i = 0; $i < sizeof($collectionArray); $i++){
+            if($currentItem != $collectionArray[$index]['id']){
+                $index = $i;
+            }
         }
-        echo "Index in Collection: ".$index;
     }else{
         $index = 0;
         $singleItem = 1;
