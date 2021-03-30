@@ -1,4 +1,3 @@
-COLLECTIONS\BROWSE.PHP
 <?php
     $pageTitle = __('Browse Collections collections\browse.php');
     echo head(array('title'=>$pageTitle, 'bodyid' => 'collections', 'bodyclass' => 'browse'));
@@ -26,5 +25,4 @@ COLLECTIONS\BROWSE.PHP
 <?php if ((get_theme_option('Display Featured Exhibit')) && function_exists('exhibit_builder_display_random_featured_exhibit')): ?>
     <?php echo exhibit_builder_display_random_featured_exhibit(); ?>
 <?php endif; ?>
-END COLLECTIONS\BROWSE.PHP
 <?php echo foot(); ?>
