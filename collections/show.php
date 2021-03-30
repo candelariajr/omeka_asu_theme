@@ -1,4 +1,3 @@
-COLLECTIONS\SHOW.PHP
 <?php
 $collectionTitle = strip_formatting(metadata('collection', array('Dublin Core', 'Title')));
 ?>
@@ -18,5 +17,4 @@ $collectionTitle = strip_formatting(metadata('collection', array('Dublin Core', 
     <?php echo __("There are currently no items within this collection."); ?>
 <?php endif; ?>
 <?php //fire_plugin_hook('public_collections_show', array('view' => $this, 'collection' => $collection)); ?>
-END COLLECTIONS\SHOW.PHP
 <?php echo foot(); ?>
