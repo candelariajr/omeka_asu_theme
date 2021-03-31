@@ -653,6 +653,7 @@ h3{
 .item-img{
     display: inline-block;
     margin-right: 15px;
+    vertical-align: top;
 }
 
 /*
