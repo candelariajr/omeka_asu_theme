@@ -27,39 +27,31 @@ echo head(array('title' => $title, 'bodyclass' => 'exhibits browse'));
     </div>
 </div>
 <br>
-
 <div class="container">
-    <div class="card-columns">
-        <?php $exhibitCount = 0; ?>
-        <?php foreach (loop('exhibit') as $exhibit): ?>
-            <div class="card">
-                <?php $exhibitCount++; ?>
-                <div class="exhibit <?php if ($exhibitCount%2==1) echo ' even'; else echo ' odd'; ?>">
-                    <h2 class="card-title"><?php echo link_to_exhibit(); ?></h2>
-                    <hr>
-                        <?php if ($exhibitImage = record_image($exhibit, 'square_thumbnail')): ?>
-                            <div class="card-img-top">
-                                <?php echo exhibit_builder_link_to_exhibit($exhibit, $exhibitImage, array('class' => 'image')); ?>
-                            </div>
-                        <?php endif; ?>
-                    <div class="card-body">
-                        <?php if ($exhibitDescription = metadata('exhibit', 'description', array('no_escape' => true))): ?>
-                            <div class="description"><?php echo $exhibitDescription; ?></div>
-                        <?php endif; ?>
-                        <?php if ($exhibitTags = tag_string('exhibit', 'exhibits')): ?>
-                            <p class="tags"><?php echo __('Tags: ') . $exhibitTags; ?></p>
-                        <?php endif; ?>
-                    </div>
+    <?php $exhibitCount = 0; ?>
+    <?php foreach (loop('exhibit') as $exhibit): ?>
+        <div class="item">
+            <?php if ($exhibitImage = record_image($exhibit, 'square_thumbnail')): ?>
+                <div class="item-img">
+                    <?php echo exhibit_builder_link_to_exhibit($exhibit, $exhibitImage, array('class' => 'image')); ?>
                 </div>
+            <?php endif; ?>
+            <div class="item-info">
+                <h4><?php echo link_to_exhibit(); ?></h4>
+                <?php if ($exhibitDescription = metadata('exhibit', 'description', array('no_escape' => true))): ?>
+                    <div class="item-description"><?php echo $exhibitDescription; ?></div>
+                <?php endif; ?>
+                <?php if ($exhibitTags = tag_string('exhibit', 'exhibits')): ?>
+                    <p class="tags"><?php echo __('Tags: ') . $exhibitTags; ?></p>
+                <?php endif; ?>
             </div>
-        <?php endforeach; ?>
-    </div>
+        </div>
+    <?php endforeach; ?>
 </div>
 <div class="container">
     <div class="row">
         <div class="col">
             <?php echo pagination_links(); ?>
-
             <?php else: ?>
                 <p><?php echo __('There are no exhibits available yet.'); ?></p>
             <?php endif; ?>
