@@ -24,3 +24,7 @@ Social Bookmarking
 	/helpers/SocialBookmarkingFunctions.php
 	Change text in hookPulicItemsShow()
   
+Specific Pages that need container encapsulation: 
+About
+Copyright
+Contribution (Enable Contribution plugin first)
