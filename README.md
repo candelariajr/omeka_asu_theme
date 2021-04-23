@@ -28,3 +28,5 @@ Specific Pages that need container encapsulation:
 About
 Copyright
 Contribution (Enable Contribution plugin first)
+
+Keep SolrSeach as is. Do not download anything that will mess with the vews directory
