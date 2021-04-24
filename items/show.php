@@ -220,6 +220,7 @@ function getNext($nextItem){
 
                 // echo get_specific_plugin_hook_output('UniversalViewer', 'public_items_show', array('view' => $this, 'item' => $item));
                 ?>
+                <br>
                 <?php
                 if(!$sketchFab){
                     echo files_for_item(
@@ -290,15 +291,18 @@ function getNext($nextItem){
             <div class="col-lg-4">
                 <div class="row">
                     <!-- METADATA -->
-                    <div class="col-12">
-                        <?php echo all_element_texts($item,
-                            array(
-                                'show_empty_elements' => false,
-                                'show_element_sets' => 'Dublin Core, Document Item Type Metadata, Still Image Item Type Metadata',
-                                'show_element_set_headings' => false
-                            ));
-                        ?>
-                    </div>
+                    <?php if($elementTexts = all_element_texts($item, 
+                        array(
+                            'show_empty_elements', false, 
+                            'show_element_ets' => 'Dublin Core, Document Item Type Metadata, Still Image Item Type Metadata', 
+                            'show_element_set_headings' => false
+                        )
+                    )):?>
+                        <div class="col-12">
+                            WHY IS THIS HERE?
+                            <?php echo $elementTexts;?>
+                        </div>
+                    <?php endif;?> 
                 </div>
             </div>
         </div>
