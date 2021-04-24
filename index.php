@@ -82,44 +82,44 @@ if($displayFeaturedItem){
             <hr>
             <div class="quick">
                 <h3>Contact Information</h3>
-                <p>For questions about the ASU <br />Digital Collections, please contact Pam Mitchem.
+                <p>For questions about the ASU <br />Digital Collections, please contact the <a href="https://collections.library.appstate.edu">Special Collections Research Center</a>.
                     <br>
-                    pricemtchemp@appstate.edu
+                    spcoll@appstate.edu
                     <br>
                     <!--href="https://mail.google.com/mail/?view=cm&fs=1&to=someone@example.com&su=SUBJECT&body=BODY&bcc=someone.else@example.com"-->
                     <a
                             target="_blank"
-                            href="https://mail.google.com/mail/?view=cm&fs=1&to=pricemtchemp@appstate.edu&su=Contact Regarding Omeka"
+                            href="https://mail.google.com/mail/?view=cm&fs=1&to=spcoll@appstate.edu&su=Contact Regarding Omeka"
                             data-toggle="tooltip"
                             data-placement="right"
                             title="Use Gmail to compose message">
                         (Web Version)</a>
                     <br>
                     <a
-                            href="mailto:pricemtchemp@appstate.edu"
+                            href="mailto:spcoll@appstate.edu"
                             data-toggle="tooltip"
                             data-placement="right"
                             title="Use your Desktop Client (Thunderbird, Outlook) to compose message">
                         (Desktop Version)</a>
                 </p>
-                <p>Phone: 828.262.7422</p>
+                <p>Phone: 828.262.4041</p>
             </div>
         </div>
         <div class="col d-xs-block d-lg-none left-index-panel">
             <div class="quick">
                 <h3>Contact Information</h3>
-                <p>For questions about the ASU <br />Digital Collections, please contact Pam Mitchem.
+                <p>For questions about the ASU <br />Digital Collections, please contact the <a href="https://collections.library.appstate.edu">Special Collections Research Center</a>.
                     <br>
-                    pricemtchemp@appstate.edu
+                    spcoll@appstate.edu
                     <br>
                     <a
-                            href="mailto:pricemtchemp@appstate.edu"
+                            href="mailto:spcoll@appstate.edu"
                             title="Use your Mobile Client (Gmail, Outlook) to compose message">
                         (Mobile Version)</a>
                     <br>
 
                 </p>
-                <p>Phone: 828.262.7422</p>
+                <p>Phone: 828.262.4041</p>
             </div>
         </div>
     </div>
