@@ -17,6 +17,7 @@ SimplePages
 	
 SimpleContactForm\
 	/views/public/index/index.php\
+	/views/public/index/thankyou.php\
 	add container wrapper for form\
 	
 Contribution\
