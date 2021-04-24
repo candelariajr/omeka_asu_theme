@@ -18,6 +18,20 @@ SimplePages
 SimpleContactForm
 	/views/public/index/index.php
 	add container wrapper for form
+	
+Contribution
+	/views/public/form.css
+	add 
+	.inputs.five.columns.omega{
+	    padding-bottom: 20px;
+	}
+	#contribution-item-metadata{
+	    padding-bottom: 20px;
+	}
+	/views/public/contribution/contribute.php
+	ass container for BS4
+	
+	
 
 *This one is optional as I personally don't like "Social Bookmarking" as the label*
 Social Bookmarking
