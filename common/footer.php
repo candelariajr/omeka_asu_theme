@@ -12,7 +12,7 @@ $navArray[] = array('label'=>'Contribute', 'uri'=>url('contribution'));
     <div class="container">
         <div class="row">
             <div class="col-xs-12 col-sm-6 col-md-3">
-                © 2020 Appalachian State University Boone, NC 28608 | 828-262-2000
+                Â© 2021 Appalachian State University Boone, NC 28608 | 828-262-2000
                 Proudly powered by <a class="asu-link" href="http://omeka.org">Omeka</a>
             </div>
             <div class="col-xs-12 col-sm-6 col-md-3">
