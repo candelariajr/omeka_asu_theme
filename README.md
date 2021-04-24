@@ -36,18 +36,15 @@ Contribution\
 Guest User\
 	/views/public/css/guest-user.css\
 	add\
-	````
+	```
 	#confirm{
 	    min-height: 50px;
 	    margin-bottom: 20px;
 	}
 	.row{
 	    margin-bottom: 0pm !important;
-	}
-	
-	```
-	
-	
+	}```
+		
 
 *This one is optional as I personally don't like "Social Bookmarking" as the label*
 Social Bookmarking
