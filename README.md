@@ -15,21 +15,21 @@ SimplePages
 	/views/public/page/show.php
 	add container for BS4
 	
-SimpleContactForm
-	/views/public/index/index.php
-	add container wrapper for form
+SimpleContactForm\
+	/views/public/index/index.php\
+	add container wrapper for form\
 	
-Contribution
-	/views/public/form.css
-	add 
-	.inputs.five.columns.omega{
-	    padding-bottom: 20px;
-	}
-	#contribution-item-metadata{
-	    padding-bottom: 20px;
-	}
-	/views/public/contribution/contribute.php
-	ass container for BS4
+Contribution\
+	/views/public/form.css\
+	add \
+	.inputs.five.columns.omega{\
+	    padding-bottom: 20px;\
+	}\
+	#contribution-item-metadata{\
+	    padding-bottom: 20px;\
+	}\
+	/views/public/contribution/contribute.php\
+	ass container for BS4\
 	
 	
 
