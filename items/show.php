@@ -299,7 +299,6 @@ function getNext($nextItem){
                         )
                     )):?>
                         <div class="col-12">
-                            WHY IS THIS HERE?
                             <?php echo $elementTexts;?>
                         </div>
                     <?php endif;?> 
