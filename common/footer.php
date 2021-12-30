@@ -1,53 +1,46 @@
-
-<div class="custom-exhibit-nav d-none d-sm-block">
+<?php
+$navArray = array();
+$navArray[] = array('class'=>'class', 'label'=>'Browse Items', 'uri'=>url('items'));
+$navArray[] = array('label'=>'Browse Collections', 'uri'=>url('collections?sort_field=Dublin+Core%2CTitle'));
+$navArray[] = array('label'=>'Contact Us', 'uri'=>url('contact'));
+$navArray[] = array('label'=>'Contribute', 'uri'=>url('contribution'));
+?>
+<?php //echo nav($navArray); ?>
+<?php fire_plugin_hook('public_footer', array('view' => $this)); ?>
+<div class="footer-wrapper">
     <div class="container">
         <div class="row">
-            <div class="col-4 col-md-3 col-lg-2 d-none d-sm-block">
-                <?php if ($prevLink = exhibit_builder_link_to_previous_page()): ?>
-                <div class="custom-exhibit-nav-button">
-                    <?php echo $prevLink; ?>
-                </div>
-                <?php endif; ?>
+            <div class="col-xs-12 col-sm-6 col-md-3">
+                © 2021 Appalachian State University Boone, NC 28608 | 828-262-2000
+                Proudly powered by <a class="asu-link" href="http://omeka.org">Omeka</a>
             </div>
-            <div class="col custom-exhibit-nav-center d-none d-sm-block">
+            <div class="col-xs-12 col-sm-6 col-md-3">
+                <h1 class="footer-links-title">Links</h1>
+                <ul class="footer-links-menu">
+                    <li><a href="<?php echo url('items')?>">Browse Items</a></li>
+                    <!--   Had to hard wire this. For some reason it keeps overwriting this with a random URL -->
+                    <li><a href="<?php echo "https://omeka.library.appstate.eudu/collections"?>">Browse Collections</a></li>
+                    <li><a href="<?php echo url('contact')?>">Contact</a></li>
+                    <li><a href="<?php echo url('contribution')?>">Contribute</a></li>
+                </ul>
             </div>
-            <div class="col-4 col-md-3 col-lg-2 d-none d-sm-block">
-                <?php if ($nextLink = exhibit_builder_link_to_next_page()): ?>
-                <div class="custom-exhibit-nav-button">
-                    <?php echo $nextLink; ?>
-                </div>
-                <?php endif; ?>
-            </div>
-        </div>
-    </div>
-</div>
-<footer class="d-block d-sm-none d-md-none d-lg-none d-xl-none">
-    <div class="container">
-        <div class="row custom-mobile-foot-print">
+            <div class="col-xs-12 col-sm-6 col-md-3">
 
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-3 pull-right" id="footer-university">
+                <a href="http://appstate.edu" title="Appalacian State University">
+                    <img src="https://library.appstate.edu/profiles/asu/themes/custom/asu_theme/images/appstatelogo.png"
+                         id="asu-footer-logo" class="pull-right" alt="Appalachian State University">
+                </a>
+            </div>
         </div>
-    </div>
-</footer>
-<footer class="custom-exhibit-mobile-foot d-lg-none d-sm-none d-xl-none">
-    <div class="container">
         <div class="row">
-            <div class="col-5">
-                <div class="custom-exhibit-nav-button">
-                    Previous Item
-                </div>
-            </div>
-            <div class="col custom-exhibit-nav-center">
-            </div>
-            <div class="col-4">
-                <div class="custom-exhibit-nav-button">
-                    Next Item
-                </div>
+            <div class="col">
+                <div style="font-size: 10px; color: grey;cursor: auto;">Architecture and UI adapted to AppState Theme by Jonathan Candelaria</div>
             </div>
         </div>
     </div>
-</footer>
-<div class="custom-filler-boot">
-
 </div>
 </body>
 </html>
+~
