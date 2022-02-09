@@ -1,227 +1,70 @@
-<script type='text/javascript'>
-<?php include('config_form.js'); ?>
-</script>
+<?php
 
-<?php $view = get_view(); ?>
-    <div class="field">
-        <div class="three columns alpha">
-            <label><?php echo __("Use Threaded Comments?"); ?></label>    
-        </div>    
-        <div class="inputs four columns omega">
-            <p class="explanation"><?php echo __("If checked, replies will be displayed indented below the comment."); ?></p>
-            <div class="input-block">        
-            <?php echo $view->formCheckbox('commenting_threaded', null,
-                array('checked'=> (bool) get_option('commenting_threaded') ? 'checked' : ''
-            
-                )
-            ); ?>                
-            </div>
-        </div>
-    </div>
-    
-    <div class='field'>
-        <div class="three columns alpha">
-            <label><?php echo __("Text for comments label"); ?></label>
-        </div>
-        <div class='inputs four columns omega'>
-            <p class='explanation'><?php echo __("A label instead of 'Comments' to use. Leave empty to use 'Comments'."); ?></p>
-            <div class='input-block'>
-                <?php echo $view->formText('commenting_comments_label', get_option('commenting_comments_label')); ?>
-            </div>        
-        </div>
-    </div>    
-    
-    <div class="field">
-        <div class="three columns alpha">
-            <label><?php echo __("Allow public commenting?"); ?></label>    
-        </div>    
-        <div class="inputs four columns omega">
-                <p class="explanation"><?php echo __("Allows everyone, including non-registered users to comment. Using this without Akismet is strongly discouraged."); ?></p>
-            <div class="input-block">        
-                <?php echo $view->formCheckbox('commenting_allow_public', null,
-                    array('checked'=> (bool) get_option('commenting_allow_public') ? 'checked' : '',
-                    )
-                ); ?>              
-            </div>
-        </div>
-    </div>    
-    
-<div class='field' id='commenting-moderate-public'>
-    <div class="three columns alpha">
-        <label><?php echo __("Require moderation for all public comments?"); ?></label>
-    </div>
-    <div class='inputs four columns omega'>
-        <p class='explanation'><?php echo __("If unchecked, comments will appear immediately."); ?></p>
-        <div class="input-block">
-            <?php echo $view->formCheckbox('commenting_require_public_moderation', null, 
-                            array('checked'=> (bool) get_option('commenting_require_public_moderation') ? 'checked' : '',
-                            )); ?>
-        </div>
-    </div>
-</div>    
-    
-<div class="field" id='moderate-options'>
-    <div class="three columns alpha">
-        <label><?php echo __("User roles that can moderate comments"); ?></label>    
-    </div>    
-    <div class="inputs four columns omega">
-        <p class="explanation"><?php echo __("The user roles that are allowed to moderate comments."); ?></p>
-        <div class="input-block">        
-            <?php
-                $moderateRoles = unserialize(get_option('commenting_moderate_roles'));
-                $userRoles = get_user_roles();
-                unset($userRoles['super']);
-                echo '<ul>';
-        
-                foreach($userRoles as $role=>$label) {
-                    echo '<li>';
-                    echo $view->formCheckbox('commenting_moderate_roles[]', $role,
-                        array('checked'=> in_array($role, $moderateRoles) ? 'checked' : '')
-                        );
-                    echo $label;
-                    echo '</li>';
-                }
-                echo '</ul>';
-            ?>
-        </div>
-    </div>
-</div>
+class Commenting_CommentForm extends Omeka_Form
+{
+    public function init()
+    {
+        parent::init();
+        $this->setAction(WEB_ROOT . '/commenting/comment/add');
+        $this->setAttrib('id', 'comment-form');
+        $user = current_user();
 
+        $urlOptions = array(
+            'label' => __('Website'),
+        );
+        $emailOptions = array(
+            'label' => __('Email (required)'),
+            'required' => true,
+            'validators' => array(
+                array('validator' => 'EmailAddress')
+            )
+        );
+        $nameOptions = array('label' => __('Your name'));
 
-<div id='non-public-options'>
-    <div class="field">
-        <div class="three columns alpha">
-            <label><?php echo __("User roles that can comment"); ?></label>    
-        </div>    
-        <div class="inputs four columns omega">
-            <p class="explanation"><?php echo __("Select the roles that can leave comments"); ?></p>
-            <div class="input-block">        
-                <?php
-                    $commentRoles = unserialize(get_option('commenting_comment_roles'));
-            
-                    echo '<ul>';
-            
-                    foreach($userRoles as $role=>$label) {
-                        echo '<li>';
-                        echo $view->formCheckbox('commenting_comment_roles[]', $role,
-                            array('checked'=> in_array($role, $commentRoles) ? 'checked' : '')
-                            );
-                        echo $label;
-                        echo '</li>';
-            
-                    }
-                    echo '</ul>';
-                ?>
-            </div>
-        </div>
-    </div>
-    
-    <div class="field">
-        <div class="three columns alpha">
-            <label><?php echo __("User roles that require moderation before publishing."); ?></label>    
-        </div>    
-        <div class="inputs four columns omega">
-            <p class="explanation"><?php echo __("If the role is allowed to moderate comments, that will override the setting here."); ?></p>
-            <div class="input-block">        
-                <?php
-                    $reqAppCommentRoles = unserialize(get_option('commenting_reqapp_comment_roles'));
-                    echo '<ul>';
-                    foreach($userRoles as $role=>$label) {
-                        echo '<li>';
-                        echo $view->formCheckbox('commenting_reqapp_comment_roles[]', $role,
-                            array('checked'=> in_array($role, $reqAppCommentRoles) ? 'checked' : '')
-                            );
-                        echo $label;
-                        echo '</li>';
-            
-                    }
-                    echo '</ul>';
-                ?>
-            </div>
-        </div>
-    </div>
+        if ($user) {
+            $emailOptions['value'] = $user->email;
+            $nameOptions['value'] = $user->name;
+        }
+        $this->addElement('text', 'author_name', $nameOptions);
+        $this->addElement('text', 'author_url', $urlOptions);
+        $this->addElement('text', 'author_email', $emailOptions);
+        $this->addElement('textarea', 'body', array(
+            'label' => __('Comment'),
+            'description' =>  __("Allowed tags:") . " &lt;p&gt;, &lt;a&gt;, &lt;em&gt;, &lt;strong&gt;, &lt;ul&gt;, &lt;ol&gt;, &lt;li&gt;",
+            'id' => 'comment-form-body',
+            'rows' => 6,
+            'required' => true,
+        ));
 
-    <div class="field">
-        <div class="three columns alpha">
-            <label><?php echo __("Allow public to view comments?"); ?></label>    
-        </div>    
-        <div class="inputs four columns omega">
-            <p class="explanation"></p>
-            <div class="input-block">        
-                <?php echo $view->formCheckbox('commenting_allow_public_view', null,
-                    array('checked'=> (bool) get_option('commenting_allow_public_view') ? 'checked' : '',
-                    )
-                ); ?>
-            </div>
-        </div>
-    </div>
-</div>
+        //assume registered users are trusted and don't make them play recaptcha
+        if (!$user && get_option('recaptcha_public_key') && get_option('recaptcha_private_key')) {
+            $this->addElement('captcha', 'captcha',  array(
+                'label' => __("Please verify you're a human"),
+                'captcha' => Omeka_Captcha::getCaptcha()
+            ));
+            $this->getElement('captcha')->removeDecorator('ViewHelper');
+        }
 
-    <div class="field view-options">
-        <div class="three columns alpha">
-            <label><?php echo __("User roles that can view comments"); ?></label>    
-        </div>    
-        <div class="inputs four columns omega">
-            <div class="input-block">        
-                <?php
-                    $viewRoles = unserialize(get_option('commenting_view_roles'));
-                    if(!$viewRoles) {
-                        $viewRoles = array();
-                    }
-                    echo '<ul>';
-                    foreach($userRoles as $role=>$label) {
-                        echo '<li>';
-                        echo $view->formCheckbox('commenting_view_roles[]', $role,
-                            array('checked'=> in_array($role, $viewRoles) ? 'checked' : '')
-                            );
-                        echo $label;
-                        echo '</li>';
-                    }
-                    echo '<ul>';
-                ?>
-            </div>
-        </div>
-    </div>
-    
-    <div class="field">
-        <div class="three columns alpha">
-            <label><?php echo __("ReCaptcha Public Key"); ?></label>    
-        </div>    
-        <div class="inputs four columns omega">
-            <p class='explanation'><?php echo __("This can also be set in the Security Settings."); ?></p>
-            <div class="input-block">        
-            <?php echo $view->formText('recaptcha_public_key', get_option('recaptcha_public_key'),
-                array('size'=>45)
-                ); ?>
-            </div>
-        </div>
-    </div>
-    
-    <div class="field">
-        <div class="three columns alpha">
-            <label><?php echo __("ReCaptcha Private Key"); ?></label>    
-        </div>    
-        <div class="inputs four columns omega">
-            <p class='explanation'><?php echo __("This can also be set in the Security Settings."); ?></p>
-            <div class="input-block">        
-            <?php echo $view->formText('recaptcha_private_key', get_option('recaptcha_private_key'),
-                array('size'=>45)
-                ); ?>
-            </div>
-        </div>
-    </div>
+        $this->addElement('hidden', 'record_id', array('decorators' => array('ViewHelper') ));
+        $this->addElement('hidden', 'path', array('decorators' => array('ViewHelper')));
+        $this->addElement('hidden', 'record_type', array('decorators' => array('ViewHelper')));
+        $this->addElement('hidden', 'parent_comment_id', array('id' => 'parent-id', 'value' => null, 'decorators' => array('ViewHelper')));
+        fire_plugin_hook('commenting_form', array('comment_form' => $this));
+        $this->addElement('submit', 'submit', array('label' => __('Submit Comment'), 'class' => 'btn btn-asu'));
+    }
 
-
-<div class="field">
-    <div class="three columns alpha">
-        <label><?php echo __("WordPress API key for Akismet"); ?></label>    
-    </div>    
-    <div class="inputs four columns omega">
-        <p class="explanation"></p>
-        <div class="input-block">        
-            <?php echo $view->formText('commenting_wpapi_key', get_option('commenting_wpapi_key'),
-                array('size'=> 45)
-            );?>        
-        </div>
-    </div>
-</div>
+    /**
+     * Override wrapper classes for simplicity and to guarantee unique
+     * selectors for applying cross-theme styles.
+     */
+    public function getDefaultElementDecorators()
+    {
+        return array(
+            array('Description', array('tag' => 'p', 'class' => 'commenting-explanation', 'escape' => false)),
+            'ViewHelper',
+            array('Errors', array('class' => 'error')),
+            'Label',
+            array(array('FieldTag' => 'HtmlTag'), array('tag' => 'div', 'class' => 'commenting-field'))
+        );
+    }
+}
