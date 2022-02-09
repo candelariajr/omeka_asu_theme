@@ -638,9 +638,13 @@ h3{
      border-radius: 3px !important;
      border: 1px solid black !important;
  }
-/*END TAG PAGE*/
+/*
+ * END TAG PAGE
+ /
 
-/* ITEMS */
+/* 
+ * ITEMS 
+ */
 .item{
     /*border: 1px solid #3e3e3e;*/
     box-shadow: 0 1px 1px rgb(0 0 0 / 11%),
@@ -660,9 +664,7 @@ h3{
     vertical-align: top;
 }
 
-/*
-    This one below is for index.php of the theme
-*/
+/*  This one below is for index.php of the theme  */
 .item-info{
     display: inline-block;
     max-width: 840px;
@@ -682,19 +684,21 @@ h3{
 }
 
 
-/* END ITEMS */
+/* 
+ * END ITEMS 
+ */
 
 
 /*
-   ITEMS ON FILES/SHOW.PHP
-*/
+ *   ITEMS ON FILES/SHOW.PHP
+ */
 .element-text{
     margin-left: 25px;
 }
 
 /*
-    EXHIBITS
-*/
+ *   EXHIBITS
+ */
 #left-side-exhibit-bar{
     color: #ffc900;
     background-color: #111;
@@ -741,8 +745,9 @@ h3{
 }
 
 /*
-    END EXHIBITS
-*/
+ *   END EXHIBITS
+ */
+
 .dark>body{
     background-color: black;
     color: #aaaaaa;
@@ -751,3 +756,19 @@ h3{
 .dark>a{
     color: #ffc900 !important;
 }
+
+/*
+ *    COMMENTING PLUGIN
+ */
+	
+.g-recaptcha{
+    padding-top: 10px;
+}
+
+#comment-form #submit{
+    margin-bottom: 10px;
+}
+
+/*
+ *    END COMMENTING PLUGIN
+ */
