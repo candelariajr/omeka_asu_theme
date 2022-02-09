@@ -1,3 +1,7 @@
+# PENDING UPDATES #
+CSS Will be retooled with more Bootstrap 4 options allowing for customization of BS in a general Omeka Implementation.
+These will happen along with the Solr Plugin Rewrite in Summer 2022.
+
 # omeka_asu_theme
 Omeka theme with Bootstrap4 modeled after ASU's Comm template
 
