@@ -238,7 +238,7 @@ function getNext($nextItem){
                             'icons' => array(
                                 'audio/mpeg'=>img('3a.png'),
                                 'application/pdf'=>img('pdficon_large.png'))));
-                    // echo "<br>";
+                    echo "<br>";
                 }?>
                 <div class="row">
                     <!-- CITATION -->
@@ -286,6 +286,13 @@ function getNext($nextItem){
                         </div>
                     </div>
                     <br>
+		<?php endif; ?>
+		<?php if(plugin_is_active('Commenting')): ?>
+		    <div class="row">
+			<div class="col">
+                            <?php echo get_specific_plugin_hook_output('Commenting', 'public_items_show', array('view' => $this, 'item' => $item)); ?>
+                        </div>
+                    </div>
                 <?php endif; ?>
             </div>
             <div class="col-lg-4">
