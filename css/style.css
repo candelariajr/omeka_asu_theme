@@ -769,6 +769,12 @@ h3{
     margin-bottom: 10px;
 }
 
+#comments-container{
+    padding:15px;
+    border: 1px solid lightgrey;
+    border-radius: .25em;	    
+}
+
 /*
  *    END COMMENTING PLUGIN
  */
