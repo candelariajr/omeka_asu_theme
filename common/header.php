@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=yes" />
-    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <!-- Global site tag (gtag.js) - Google Analytics This is for tag manager only. See if this can become a plugin-->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-NDSGD12ESL"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
@@ -103,7 +103,7 @@ if(current_user() != null && !$isAdminPage && !$isContactPage){
             $adminURL = CURRENT_BASE_URL."/admin/exhibits/edit/".$id;
         }
     }
-    echo "<div  style='background-color: #111; width: 100%'><div class='container'><span style='padding-left: 16px;'><a href='".$adminURL."' style='background-color:#fcc900; color: #111; border-radius: 5px; padding: 4px;'>Edit</a></span></div></div>";
+    echo "<div  style='background-color: #111; width: 100%'><div class='container'><span style='padding-left: 16px;'><a href='".$adminURL."' alt='Administration' title='Administration' style='background-color:#fcc900; color: #111; border-radius: 5px; padding: 4px;'>Edit</a></span></div></div>";
 }
 ?>
 
@@ -123,7 +123,7 @@ if(current_user() != null && !$isAdminPage && !$isContactPage){
     <div class="container">
         <div class="row">
             <div class="col d-none d-sm-none d-md-none d-lg-block col-lg-2 d-xl-block col-xl-2">
-                <a href="http://appstate.edu" title="ASU">
+                <a href="https://appstate.edu" title="Appalachian State University Home">
                     <img src="https://library.appstate.edu/profiles/asu/themes/custom/asu_theme/images/appstatelogo.png" alt="ASU" class="custom-top-logo">
                 </a>
             </div>
@@ -134,9 +134,9 @@ if(current_user() != null && !$isAdminPage && !$isContactPage){
                 <form class="form-inline custom-form" id="search-form" name="search-form" action="<?php echo CURRENT_BASE_URL;?>/solr-search/results/interceptor" method="get">
                     <div class="input-group">
                         <label for="query" class="sr-only"></label>
-                        <input type="text" name="query" placeholder="Search..." class="form-control" aria-label="Search terms" id="query" required>
+                        <input type="text" name="query" placeholder="Search..." class="form-control" aria-label="Search terms" title="Search Terms Input" alt="Search Terms Input" id="query" required>
                         <div class="input-group-append">
-                            <button type="submit" name="submit-search" id="submit_search" value="Search" class="btn">
+                            <button type="submit" name="submit-search" id="submit_search" alt="Search" title="Search" value="Search" class="btn">
                                 Go
                             </button>
                         </div>
@@ -151,7 +151,7 @@ if(current_user() != null && !$isAdminPage && !$isContactPage){
         <div class="row">
             <div class="col-12">
                 <div class="title-header-text">
-                    <h5><a class="asu-header-link" href="http://library.appstate.edu">Appalachian State University Libraries</a></h5>
+                    <h5><a class="asu-header-link" title="University Libraries Home" alt="University Libraries Home" href="https://library.appstate.edu">Appalachian State University Libraries</a></h5>
                 </div>
             </div>
         </div>
@@ -163,9 +163,9 @@ if(current_user() != null && !$isAdminPage && !$isContactPage){
             <div class="col-12">
                 <nav class="navbar navbar-expand-lg navbar-light">
                     <a class="navbar-brand" href="<?php echo url('') ?>">
-                        <h4 class="custom-site-name-bar">Digital Collections</h4>
+                        <h4 class="custom-site-name-bar" alt="Digital Collections Home" title="Digital Collections Home">Digital Collections</h4>
                     </a>
-                    <button class="navbar-toggler custom-toggler" type="button" data-toggle="collapse" data-target="#navbarToggler0" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
+                    <button class="navbar-toggler custom-toggler" type="button" data-toggle="collapse" data-target="#navbarToggler0" aria-controls="navbarTogglerDemo03" alt="Navigation Menu" title="Navigation Menu" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
                     </button>
                     <div class="collapse navbar-collapse" id="navbarToggler0">
@@ -181,19 +181,19 @@ if(current_user() != null && !$isAdminPage && !$isContactPage){
                             </li>
                             -->
                             <li class="nav-item" id="navExhibits">
-                                <a class="nav-link asu-link" href="<?php echo url("exhibits")?>">Browse Exhibits</a>
+                                <a class="nav-link asu-link" alt="Browse Exhibits" title="Browse Exhibits" href="<?php echo url("exhibits")?>">Browse Exhibits</a>
                             </li>
                             <li class="nav-item" id="navCollections">
-                                <a class="nav-link asu-link" href="<?php echo url("collections")?>">Browse Collections</a>
+                                <a class="nav-link asu-link" alt="Browse Collections" title="Browse Collections" href="<?php echo url("collections")?>">Browse Collections</a>
                             </li>
                             <li class="nav-item" id="navAbout">
-                                <a class="nav-link asu-link" href="<?php echo url("about")?>">About Us</a>
+                                <a class="nav-link asu-link" alt="About Us" title="About Us" href="<?php echo url("about")?>">About Us</a>
                             </li>
                             <li class="nav-item" id="navContact">
-                                <a class="nav-link asu-link" href="<?php echo url("contact")?>">Contact Us</a>
+                                <a class="nav-link asu-link" alt="Contact Us" title="Contact Us" href="<?php echo url("contact")?>">Contact Us</a>
                             </li>
                             <li class="nav-item" id="navCopyright">
-                                <a class="nav-link asu-link" href="<?php echo url("copyright")?>">Copyright Info</a>
+                                <a class="nav-link asu-link" alt="Copyright Information" title="Copyright Information" href="<?php echo url("copyright")?>">Copyright Info</a>
                             </li>
                         </ul>
                     </div>
