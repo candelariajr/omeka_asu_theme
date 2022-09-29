@@ -271,6 +271,56 @@ hr{
     max-height: 100%;
 }
 
+/* Fix register page and Admin Config Bar  */
+
+.registration-form label{
+    font-weight: bold;
+}
+
+.registration-form label::after{
+    content: " : ";
+}
+
+.registration-form .inputs::after{
+  /*You're free to go this time, inputs*/ 
+}
+
+.registration-form form{
+    max-width: 650px;
+}
+
+.registration-form .field{
+    display: block;
+    overflow: auto;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #ccc;
+    margin-bottom: 15px;
+}
+
+.registration-form #submit{
+    border-radius: 5px;
+    border: 1px solid #d1ac00;
+    background-color: #ffc900;
+    font-weight: bold;
+    padding: 6px;
+}
+
+.registration-form #submit:hover{
+    background-color: #d1ac00;
+}
+
+.register .row{
+    margin-bottom: 0px;
+}
+
+.register .container>h1{
+    padding-top: 10px;
+}
+
+.register > .custom-admin-container-top{
+    display: none;
+}
+
 .custom-admin-container-top{
     background-color: #111;
 }
@@ -390,6 +440,15 @@ h3{
 .navbar-brand{
     padding-top: 0.25rem;
     padding-bottom: 0;
+}
+
+.navbar{
+    background-color:black;
+}
+
+.navbar-expand{
+    padding: 0; 
+    height: 32px;
 }
 
 .item-title{
@@ -609,7 +668,9 @@ h3{
     padding-top: 5px;
 }
 
-/* SIGN IN FORM CSS*/
+/* 
+ * SIGN IN FORM CSS
+*/
 .form-signin{
     width: 100%;
     max-width: 330px;
@@ -629,9 +690,13 @@ h3{
     margin-right:10px;
 }
 
-/* END SIGN IN FORM CSS*/
+/* 
+ * END SIGN IN FORM CSS
+*/
 
-/*TAG PAGE*/
+/*
+ * TAG PAGE
+*/
  span> a.current{
      background-color: #ffc900 !important;
      color: black !important;
@@ -643,8 +708,11 @@ h3{
  /
 
 /* 
- * ITEMS 
+ * ITEMS BROWSE 
  */
+
+
+
 .item{
     /*border: 1px solid #3e3e3e;*/
     box-shadow: 0 1px 1px rgb(0 0 0 / 11%),
@@ -662,6 +730,13 @@ h3{
     display: inline-block;
     margin-right: 15px;
     vertical-align: top;
+}
+
+@media only screen and (max-width: 1119px){
+    .item-img{
+        display:flex;
+	justify-content:center;
+    }
 }
 
 /*  This one below is for index.php of the theme  */
@@ -690,7 +765,7 @@ h3{
 
 
 /*
- *   ITEMS ON FILES/SHOW.PHP
+ * ITEMS ON FILES/SHOW.PHP
  */
 .element-text{
     margin-left: 25px;
@@ -765,16 +840,29 @@ h3{
     padding-top: 10px;
 }
 
-#comment-form #submit{
+#comments-container{
     margin-bottom: 10px;
 }
 
-#comments-container{
-    padding:15px;
+#comment-form{
+    padding: 15px;
     border: 1px solid lightgrey;
-    border-radius: .25em;	    
+    border-radius: .25em;
 }
 
 /*
  *    END COMMENTING PLUGIN
  */
+
+/* 
+ * CONTACT FORM 
+*/
+
+/*? Contact? Might be more common, trying it and seeing */
+#primary>h1{
+    padding-top:10px !important;
+}
+
+#contact-form>.field:last-child{
+    padding-top:15px;
+}
