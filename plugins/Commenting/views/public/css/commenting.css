@@ -1,0 +1,116 @@
+#comments-container .comment-body {
+    margin-left: 100px;
+    padding: 6px;
+}
+
+#comments-container .comment-author img.gravatar {
+    height: auto;
+    width: auto;
+}
+
+#comment-form {
+    clear:both;
+    line-height: 1em;
+    padding-top: 1em;
+}
+
+#comment-form .mce-tinymce button {
+        background: none;
+        margin: 0;
+        text-transform: none;
+}
+
+#comment-form .mce-tinymce [aria-haspopup="true"]:after {
+        content: none;
+}
+
+#comment-form #submit {
+    clear: both;
+    display: block; 
+}
+
+.commenting-field {
+    margin-bottom: 1em;
+}
+
+.commenting-explanation {
+    margin: 1em 0;
+}
+
+.commenting-field label, .commenting-field input {
+    display: inline-block !important;
+    vertical-align: middle;
+}
+
+.commenting-field label {
+    width: 40%;
+    font-weight: bold;
+    margin: 0;
+}
+
+.commenting-field label[for="captcha"] {
+    width: 100%;
+}
+
+.commenting-field input[type="text"] {
+    width: 58%;
+    margin: 0;
+}
+
+div#comments-container div.comment-children {
+    padding-left: 2rem;
+    clear: both;
+    border-left: 1px solid #ccc;
+}
+
+div.comment {
+    padding: 1rem 1rem 0;
+    margin: 1rem 0 0;
+    clear: both;
+    overflow: hidden;
+}
+
+div.comment-author {
+	float: left;	
+	margin-right: 6px;
+	width: 100px;
+}
+
+.comment.flagged > .comment-body {
+    background-color: pink;
+}
+
+.action-links {
+	float: right;
+    margin-top: .5rem;
+}
+
+.action-links .action {
+    margin-left: 1rem;
+} 
+
+p.comment-author-name {
+	margin: 0;	
+}
+
+div.success {
+    font-size: 1.8em;
+}
+
+a.mceButton {
+	overflow: inherit;	
+}
+
+.flagged > .action-links .flag-action .green,
+.flag-action .red {
+    display: none;
+}
+
+.flagged > .action-links .flag-action .red,
+.flag-action .green {
+    display: inline-block;
+}
+
+#comment-form-body{
+    max-width: 100%;
+}
