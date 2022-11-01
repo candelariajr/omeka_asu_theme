@@ -151,7 +151,7 @@ if(current_user() != null && !$isAdminPage && !$isContactPage){
         <div class="row">
             <div class="col-12">
                 <div class="title-header-text">
-                    <h5><a class="asu-header-link" title="University Libraries Home" alt="University Libraries Home" href="https://library.appstate.edu">Appalachian State University Libraries</a></h5>
+                    <h5><a class="asu-header-link" title="University Libraries Home" alt="University Libraries Home" href="https://library.appstate.edu">University Libraries</a></h5>
                 </div>
             </div>
         </div>
